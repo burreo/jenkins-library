@@ -274,9 +274,14 @@ void handleErrorDetails(String stepName, Closure body) {
     try {
         body()
     } catch (ex) {
+        echo "debug111: exception occurred in $stepName"
         def errorDetailsFileName = "${stepName}_errorDetails.json"
+        def detailsContent = readFile(file: errorDetailsFileName)
+        echo "debug111: detailsContent is $detailsContent"
         if (fileExists(file: errorDetailsFileName)) {
+            echo "debug111: errorDetailsFileName is $errorDetailsFileName"
             def errorDetails = readJSON(file: errorDetailsFileName)
+            echo "debug111: errorDetails is $errorDetails"
             def errorCategory = ""
             if (errorDetails.category) {
                 errorCategory = " (category: ${errorDetails.category})"
